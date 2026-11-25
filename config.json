@@ -1,0 +1,23 @@
+{
+  "rate_alert_thresholds": {
+    "oi":  {"1": {"upper": 0.025, "lower": 0.025}, "5": {"upper": 0.10, "lower": 0.10}, "30": {"upper": 0.25, "lower": 0.25}},
+    "iv":  {"1": {"upper": 0.1, "lower": 0.1},  "5": {"upper": 0.25, "lower": 0.25}, "30": {"upper": 0.50, "lower": 0.50}},
+    "vol": {"1": {"upper": 0.05},                "5": {"upper": 0.20},               "30": {"upper": 0.5}}
+  },
+  "rate_alert_floors": {"oi": 1000.0, "iv": 5.0, "vol": 1000.0},
+  "interpretor": {
+    "enabled": true,
+    "shift_confirm_seconds": 120,
+    "bias_suppress_seconds": 3600,
+    "hit_tolerance_pct": 0.10,
+    "confidence": {
+      "primary":        {"start": 100.0, "n": 4},
+      "closer_second":  {"start": 50.0,  "n": 5},
+      "further_second": {"start": 100.0, "n": 4}
+    }
+  },
+  "telegram_forward": {
+    "tier1": {"cross": true, "gex": false, "rr": false, "pcr": false, "oi": false, "vol": false},
+    "tier2": {"oi": true, "iv": false, "vol": false}
+  }
+}

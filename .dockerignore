@@ -1,0 +1,26 @@
+# Local Python env / caches — never needed inside the image (deps are installed fresh from
+# requirements.lock during the build)
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.tmp/
+
+# Secrets — must never be baked into an image layer; supplied at run time via a bind mount instead
+# (see docker-compose.yml)
+.env
+
+# Runtime data — bind-mounted at run time (see docker-compose.yml). Baking any of this into the
+# image would be both pointless (the mount shadows it completely) and, for market.db/snapshot.db,
+# would bloat every image build by multiple gigabytes.
+data/
+
+# Editor/OS artifacts
+.DS_Store
+**/.DS_Store
+
+# Tests — dev-only, not needed to run the app
+tests/
+
+# Documentation
+*.md

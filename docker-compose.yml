@@ -1,0 +1,18 @@
+services:
+  onechain:
+    build: .
+    container_name: onechain
+    ports:
+      # SECURITY: keep the "127.0.0.1:" prefix — it's what keeps OneChain unreachable from any
+      # other machine on your network. Writing "8053:8053" (no prefix) would expose the dashboard
+      # to your whole LAN. See config.py's `host` field comment for why this matters here.
+      - "127.0.0.1:8053:8053"
+    volumes:
+      # Your credentials/settings — bind-mounted (not copied into the image) so edits take effect
+      # on the next restart with no rebuild required, and so the app's own Dhan-token-renewal
+      # write-back lands on this real file rather than a throwaway copy inside the container.
+      - ./.env:/app/.env
+      # Market data, snapshots, alert/interpretor state — bind-mounted so it survives restarts and
+      # rebuilds, and stays a real folder on your computer rather than hidden Docker storage.
+      - ./data:/app/data
+    restart: unless-stopped

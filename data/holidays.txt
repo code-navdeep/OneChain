@@ -1,0 +1,52 @@
+# Market holidays for OneChain — days the NSE market is closed.
+# One date per line, dd/mm/yyyy (e.g. 14/04/2026). Lines starting with # are
+# ignored, so a date may be followed by a # line naming the holiday.
+#
+# What a listed date does (read once at start-up, adapters/holidays.py):
+#  - the 15:30 end-of-day job does not run that day — no snapshot, no cleanup
+#    of old data, no token renewal;
+#  - a running auto-refresh does not fetch that day (a manual Fetch still does);
+#  - it is not counted as a trading day in time to expiry, which feeds the
+#    Black-Scholes prices, the Advanced tab's gamma profile and the reversal
+#    curves.
+#
+# Why it matters: a holiday NOT listed here is treated as a trading day — the
+# end-of-day job stores the closed market's unchanged chains in the history the
+# volatility metrics are computed from, and time to expiry counts one day too
+# many. Nothing warns you.
+#
+# UPDATE EACH YEAR, as soon as NSE publishes the next year's trading-holiday
+# list (late in the year; it is on nseindia.com): add next year's dates below.
+# A missing file, or a line that is not a date, is not reported: the app then
+# treats only weekends, plus whatever dates did parse, as closed.
+
+
+14/04/2026
+# Tuesday, Dr. BR Ambedkar Jayanti
+
+01/05/2026
+# Friday, Maharashtra Day
+
+28/05/2026
+#Thursday, Bakr-Eid
+
+26/06/2026
+# Friday, Muharram
+
+14/09/2026
+# Monday, Ganesh Chaturthi
+
+02/10/2026
+# Friday, Mahatma Gandhi Jayanti
+
+20/10/2026
+# Tuesday, Dussehra
+
+10/11/2026
+# Tuesday, Diwali
+
+24/11/2026
+# Tuesday, Prakash Gurpurb Sri Guru Nanak Dev
+
+25/12/2026
+# Friday, Christmas

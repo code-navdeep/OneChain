@@ -1,0 +1,972 @@
+/* Self-hosted fonts (no CDN) — General Sans (UI) + Geist Mono (numerics). */
+@font-face { font-family: "General Sans"; src: url("/assets/fonts/GeneralSans-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "General Sans"; src: url("/assets/fonts/GeneralSans-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "General Sans"; src: url("/assets/fonts/GeneralSans-Semibold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "General Sans"; src: url("/assets/fonts/GeneralSans-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/assets/fonts/GeistMono-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/assets/fonts/GeistMono-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/assets/fonts/GeistMono-Semibold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+
+:root {
+  /* All regions converted → the global page tokens flip to the dark "Midnight Quant" palette, so the
+     page background (and any token-based text) is dark too. No more light gaps showing through. */
+  --oc-bg: #0a0f1e;
+  --oc-surface: #121a2e;
+  --oc-surface-soft: #18233c;
+  --oc-border: #1e2a45;
+  --oc-border-strong: #2a3a5c;
+  --oc-ink: #e8edf7;
+  --oc-muted: #8a97b5;
+  --oc-primary: #22d3a8;
+  --oc-primary-soft: rgba(34, 211, 168, 0.14);
+  --oc-success: #2dd4a0;
+  --oc-danger: #ff6b6b;
+  --oc-warning: #cb7c00;
+  --oc-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  --oc-font-ui: "General Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --oc-font-mono: "Geist Mono", "SF Mono", ui-monospace, monospace;
+  --oc-z-sticky-primary: 1200;
+  --oc-z-sticky-secondary: 1190;
+  --oc-z-dropdown: 3000;
+  --oc-z-tooltip: 3100;
+  --oc-sticky-secondary-top: 54px;
+}
+
+html,
+body {
+  background: var(--oc-bg);
+  color: var(--oc-ink);
+}
+
+/* Hide the window scrollbar graphic while keeping the page fully scrollable (wheel/keyboard/drag
+   unaffected) — so the fixed right-drawer arrow toggle isn't obscured by the scrollbar at the edge.
+   scrollbar-width covers Firefox; ::-webkit-scrollbar covers Chrome + Safari. */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+body {
+  font-family: var(--oc-font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+.onechain-shell {
+  padding: 0 10px 30px 10px;
+}
+
+/* Terminal top-bar. */
+.onechain-app-header {
+  margin: 6px 0 14px 0;
+  padding: 11px 18px;
+  background: linear-gradient(180deg, #0d1426 0%, #0a0f1e 100%);
+  border: 1px solid #1e2a45;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.onechain-brand-mark {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #22d3a8 0%, #15a98a 100%);
+  box-shadow: 0 0 0 1px rgba(34, 211, 168, 0.35), 0 6px 16px rgba(34, 211, 168, 0.22);
+}
+
+.onechain-brand-mark::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  top: 50%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: #0a0f1e;
+  transform: translateY(-50%) rotate(-38deg);
+}
+
+.onechain-app-title {
+  margin: 0;
+  font-family: var(--oc-font-ui);
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.05;
+  color: #e8edf7;
+}
+
+.onechain-app-subtitle {
+  margin-top: 1px;
+  color: #8a97b5;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.onechain-chorbazaar-link {
+  color: #22d3a8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  padding: 5px 12px;
+  border: 1px solid rgba(34, 211, 168, 0.32);
+  border-radius: 8px;
+  background: rgba(34, 211, 168, 0.06);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.onechain-chorbazaar-link:hover {
+  background: rgba(34, 211, 168, 0.14);
+  border-color: #22d3a8;
+  color: #e8edf7;
+}
+
+.onechain-chorbazaar-arrow {
+  margin-left: 5px;
+  font-size: 0.9em;
+}
+
+.onechain-shell .card,
+.onechain-shell .accordion-item,
+.onechain-controls-content,
+.onechain-workflow-toolbar,
+.onechain-chain-card {
+  border: 1px solid var(--oc-border);
+  border-radius: 10px;
+  box-shadow: var(--oc-shadow);
+}
+
+.onechain-workflow-strip {
+  padding: 4px 0;
+}
+
+.onechain-workflow-strip .btn-group .btn {
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.onechain-shell .card-header {
+  background: var(--oc-surface-soft);
+  border-bottom: 1px solid var(--oc-border);
+  padding: 0.45rem 0.6rem;
+}
+
+.onechain-shell .card-body {
+  padding: 0.7rem 0.85rem;
+}
+
+/* Dark controls card (Phase 2 — the builder). Scoped + higher specificity than the general .card
+   rule, so the not-yet-converted cards stay light. The inputs inside are dark-native DMC. */
+.onechain-shell .card.onechain-controls-card {
+  background: #121a2e;
+  border: 1px solid #1e2a45;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+
+.onechain-controls-card .card-header {
+  background: #0e1524;
+  border-bottom: 1px solid #1e2a45;
+  padding: 6px;
+}
+
+/* Clearly clickable section bar — distinct raised surface, chevron, hover affordance. */
+.onechain-controls-card #controls-collapse-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, #1b2747 0%, #141d33 100%);
+  border: 1px solid #243152;
+  border-radius: 8px;
+  color: #e8edf7;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.onechain-controls-card #controls-collapse-button:hover {
+  background: linear-gradient(180deg, #223060 0%, #1a2540 100%);
+  border-color: #22d3a8;
+  color: #22d3a8;
+}
+
+.onechain-controls-chevron {
+  color: #22d3a8;
+  font-size: 0.95rem;
+}
+
+.onechain-controls-card .card-body {
+  background: #121a2e;
+}
+
+.onechain-controls-card .onechain-controls-content {
+  border: none;
+  box-shadow: none;
+}
+
+.onechain-controls-card .onechain-controls-status {
+  color: #8a97b5;
+}
+
+/* Multi-Instrument basket list — readable ink, not Bootstrap's dark default which
+   washed out on the dark controls card. Children inherit. */
+#controls-basket-summary,
+#controls-basket-summary div,
+#controls-basket-summary li {
+  color: var(--oc-ink);
+}
+
+.onechain-controls-card hr {
+  border-color: #1e2a45;
+  opacity: 1;
+}
+
+/* Dark chain card (Phase 4) — the DataTable inside carries its own dark cells. */
+.onechain-shell .card.onechain-chain-card {
+  background: #0e1524;
+  border: 1px solid #1e2a45;
+}
+
+.onechain-chain-card .card-body {
+  background: #0e1524;
+  color: #e8edf7;
+}
+
+/* DMC Select / MultiSelect dropdown menu — guarantee a dark, legible popup above the sticky bars. */
+.mantine-Select-dropdown,
+.mantine-MultiSelect-dropdown,
+.mantine-Combobox-dropdown {
+  background-color: #18233c;
+  border: 1px solid #2a3a5c;
+}
+
+.mantine-Combobox-option {
+  color: #e8edf7;
+  font-size: 0.84rem;
+}
+
+.mantine-Combobox-option[data-combobox-selected] {
+  background-color: #22d3a8;
+  color: #07271f;
+}
+
+.mantine-Combobox-option[data-combobox-active],
+.mantine-Combobox-option:hover {
+  background-color: rgba(34, 211, 168, 0.16);
+}
+
+.mantine-Combobox-empty {
+  color: #8a97b5;
+}
+
+/* Dark tab-bar chrome (Phase 1). Explicit navy values — the global --oc-* tokens stay light until
+   every region is converted, then they flip to dark and these consolidate. */
+.onechain-primary-tabs-shell {
+  position: sticky;
+  top: 0;
+  z-index: var(--oc-z-sticky-primary);
+  overflow: visible;
+  background: linear-gradient(180deg, rgba(13, 20, 38, 0.97) 0%, rgba(10, 15, 30, 0.93) 100%);
+  backdrop-filter: blur(8px);
+  padding: 7px 12px;
+  border: 1px solid #1e2a45;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.onechain-secondary-tabs-shell {
+  position: sticky;
+  top: var(--oc-sticky-secondary-top);
+  z-index: var(--oc-z-sticky-secondary);
+  overflow: visible;
+}
+
+#primary-tabs-shell .nav-tabs {
+  border-bottom: none;
+  gap: 6px;
+}
+
+#primary-tabs-shell .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #8a97b5;
+  padding: 0.34rem 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+#primary-tabs-shell .nav-tabs .nav-link:hover {
+  color: #e8edf7;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#primary-tabs-shell .nav-tabs .nav-link.active {
+  color: #07271f;
+  background: #22d3a8;
+  border-color: #22d3a8;
+  font-weight: 700;
+}
+
+.onechain-secondary-row-card {
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #1e2a45;
+  box-shadow: none;
+  background: #121a2e;
+}
+
+.onechain-secondary-row-card .card-body {
+  padding: 0.4rem 0.5rem;
+}
+
+.onechain-secondary-row-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #8a97b5;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+#loaded-pair-tabs-row .nav-tabs {
+  border-bottom: none;
+  gap: 4px;
+}
+
+#loaded-pair-tabs-row .nav-tabs .nav-link {
+  padding: 0.24rem 0.62rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8a97b5;
+  border: 1px solid #1e2a45;
+  border-radius: 6px;
+  background: #101725;
+}
+
+#loaded-pair-tabs-row .nav-tabs .nav-link.active {
+  color: #07271f;
+  border-color: #22d3a8;
+  background: #22d3a8;
+  font-weight: 700;
+}
+
+.onechain-controls-content label,
+.onechain-shell .form-label,
+.onechain-shell .dbc-label {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  color: var(--oc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+
+.onechain-shell .form-control,
+.onechain-shell .form-select {
+  border-radius: 7px;
+  border-color: var(--oc-border);
+  min-height: 32px;
+}
+
+.onechain-shell .btn {
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.34rem 0.65rem;
+}
+
+.onechain-controls-status {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--oc-muted);
+}
+
+.onechain-section-title {
+  font-size: 0.83rem;
+  font-weight: 800;
+  color: var(--oc-ink);
+}
+
+.onechain-chain-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--oc-ink);
+  margin-bottom: 4px;
+}
+
+.onechain-chain-subtitle {
+  color: var(--oc-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+  border-collapse: collapse !important;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td,
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+  line-height: 1.08 !important;
+}
+
+.accordion-button {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--oc-ink);
+  background: var(--oc-surface);
+}
+
+.accordion-button:not(.collapsed) {
+  color: var(--oc-primary);
+  background: var(--oc-primary-soft);
+  box-shadow: inset 0 -1px 0 var(--oc-border);
+}
+
+.accordion-body {
+  padding: 0.6rem 0.75rem;
+}
+
+.dropdown-menu,
+.rc-tooltip,
+.dash-table-tooltip {
+  z-index: var(--oc-z-dropdown) !important;
+}
+
+.dash-table-tooltip {
+  z-index: var(--oc-z-tooltip) !important;
+}
+
+/* Right-edge readouts on the primary tab bar: latest VIX + chain fetch time. */
+#tabbar-status-indicators {
+  padding-right: 0.4rem;
+}
+
+.onechain-tabbar-indicator {
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #8a97b5;
+}
+
+/* Aggregate/Greeks switches on the dark tab bar (dbc form-switch, light base). */
+#tabbar-status-indicators .form-check-label {
+  color: #c3ccdf;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+#tabbar-status-indicators .form-check-input {
+  background-color: #243152;
+  border-color: #3a4a6c;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23c3ccdf'/%3e%3c/svg%3e");
+}
+
+#tabbar-status-indicators .form-check-input:checked {
+  background-color: #22d3a8;
+  border-color: #22d3a8;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+}
+
+#tabbar-status-indicators .form-check-input:disabled {
+  opacity: 0.4;
+}
+
+/* Mark popover (dbc) — dark, so it doesn't pop as a white box on the dark app. */
+.popover {
+  background-color: #18233c;
+  border: 1px solid #2a3a5c;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+
+.popover .popover-arrow::after,
+.popover .popover-arrow::before {
+  border-bottom-color: #2a3a5c;
+  border-top-color: #2a3a5c;
+}
+
+.popover .popover-body {
+  color: #e8edf7;
+}
+
+.popover .popover-body .form-control {
+  background: #101725;
+  border: 1px solid #1e2a45;
+  color: #e8edf7;
+}
+
+.popover .popover-body .onechain-controls-status {
+  color: #8a97b5;
+}
+
+/* Live alert marquee in the bottom-panel header — a fixed LIVE badge + a scrolling viewport
+   (edge-faded, pause-on-hover) holding colour-coded, dotted alert items. */
+.oc-ticker,
+.oc-ticker-viewport {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.oc-ticker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.oc-ticker-live {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #2dd4a0;
+  padding: 2px 8px;
+  border: 1px solid rgba(45, 212, 160, 0.4);
+  border-radius: 5px;
+  background: rgba(45, 212, 160, 0.08);
+}
+
+.oc-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2dd4a0;
+  /* Glow (box-shadow) dropped — a blurred shadow repaints every frame under the opacity pulse.
+     The opacity pulse stays (compositor-cheap) to keep the "live" blink. */
+  animation: oc-live-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes oc-live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.oc-ticker-viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  /* Edge mask-fade dropped — masking an always-animating element forces per-frame mask
+     compositing for negligible visual gain. `overflow: hidden` clips the scrolling track instead. */
+}
+
+.oc-ticker-track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: oc-marquee 30s linear infinite;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--oc-warning);
+}
+
+.oc-ticker-row:hover .oc-ticker-track {
+  animation-play-state: paused;
+}
+
+.oc-ticker-sep {
+  color: #3a4a6c;
+}
+
+@keyframes oc-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Bottom-panel Stat tiles — a small uppercase muted label over a larger mono value.
+   The optional accent colour (teal / coral) is applied inline by the renderer on the
+   regime / signal / skew reads so the key values pop without colouring every tile. */
+.oc-stat-tile {
+  min-width: 104px;
+  padding: 7px 14px 7px 10px;
+  margin: 0 10px 8px 0;
+  border-left: 2px solid var(--oc-border-strong);
+  background: rgba(255, 255, 255, 0.015);
+  border-radius: 0 4px 4px 0;
+}
+
+.oc-stat-label {
+  color: var(--oc-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.oc-stat-value {
+  color: var(--oc-ink);
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  margin-top: 1px;
+}
+
+/* Bottom-panel "Changes" feed (right 25%) — a structured, colour-coded row per change:
+   a category dot (teal=rr / coral=gex / amber=level, from analytics.alerts.ALERT_CATEGORY_COLORS)
+   + a muted mono timestamp + the change body. Flat list (no section headers); type is read from
+   the dot colour. Explicit --oc-* tokens (the Bootstrap text utilities wash out on the dark panel). */
+.oc-change-feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.oc-change-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 4px;
+  border-bottom: 2px solid var(--oc-border);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.oc-change-item:last-child {
+  border-bottom: none;
+}
+
+.oc-change-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.oc-change-time {
+  flex-shrink: 0;
+  color: var(--oc-muted);
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+}
+
+.oc-change-body {
+  color: var(--oc-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.oc-change-empty {
+  color: var(--oc-muted);
+}
+
+/* A highest ⇄ 2nd-highest positional swap, tied into one cluster: the inner row divider is dropped
+   so the two rows read as one unit. Single changes are separated by the thicker (2px) inter-change
+   lines, so the group — having no internal divider — reads as one distinct block, no accent bar.
+   See group_swap_rows. */
+.oc-change-group {
+  border-bottom: 2px solid var(--oc-border);
+}
+.oc-change-group .oc-change-item {
+  border-bottom: none;
+}
+.oc-change-group:last-child {
+  border-bottom: none;
+}
+
+/* On-theme notice — the dark replacement for Bootstrap's light dbc.Alert / dbc.Card empty states.
+   Dark surface + muted text + a thin LEFT accent border for severity (the .oc-stat-tile idiom),
+   never a full pastel fill. See ui/notices.build_notice. */
+.oc-notice {
+  background: var(--oc-surface);
+  border: 1px solid var(--oc-border);
+  border-left: 3px solid var(--oc-border);
+  border-radius: 8px;
+  color: var(--oc-muted);
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.oc-notice-info {
+  border-left-color: var(--oc-primary);
+}
+.oc-notice-warning {
+  border-left-color: var(--oc-warning);
+}
+.oc-notice-muted {
+  border-left-color: var(--oc-border);
+}
+
+/* On-theme "Aggregate Mode" chip — replaces the stock yellow dbc.Badge with an amber-tint pill. */
+.oc-agg-badge {
+  background: rgba(245, 181, 68, 0.14);
+  color: var(--oc-warning);
+  border: 1px solid rgba(245, 181, 68, 0.4);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Framed section title for each bottom-panel metric cluster — a teal-tipped uppercase label. */
+.oc-panel-section-title {
+  color: var(--oc-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  padding-left: 8px;
+  border-left: 3px solid var(--oc-primary);
+}
+
+/* Interpretor pinned block — per-side shift-streak (signed: + up / - down) + the frozen 09:20 walls,
+   pinned above the Changes feed (live + per-pair only). A light-walled surface panel; Geist Mono. */
+.oc-interp-pinned {
+  background: var(--oc-surface);
+  border: 1px solid var(--oc-border);
+  border-left: 3px solid var(--oc-primary);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+.oc-interp-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--oc-ink);
+}
+.oc-interp-side {
+  font-weight: 700;
+  color: var(--oc-primary);
+}
+.oc-interp-sep {
+  color: var(--oc-muted);
+}
+.oc-interp-second {
+  color: var(--oc-muted);
+}
+
+@media (max-width: 992px) {
+  .onechain-shell {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  #primary-tabs-shell .nav-tabs .nav-link {
+    padding: 0.28rem 0.55rem;
+    font-size: 0.79rem;
+  }
+
+  .onechain-secondary-tabs-shell {
+    top: 58px;
+  }
+}
+
+/* Chart-holding cards (Charts + Advanced tabs) → dark, so the navy charts don't clash on a light
+   card. The Chain card stays light until Phase 4 (it holds the light DataTable — converted with it). */
+#charts-container .card,
+#advanced-container .card {
+  background: #121a2e;
+  border: 1px solid #1e2a45;
+  color: #e8edf7;
+}
+
+#charts-container .card-header,
+#advanced-container .card-header {
+  background: #0e1524;
+  border-bottom: 1px solid #1e2a45;
+  color: #e8edf7;
+  font-weight: 700;
+}
+
+#charts-container .card-body,
+#advanced-container .card-body {
+  color: #e8edf7;
+}
+
+#charts-container h5,
+#charts-container label,
+#charts-container .form-label,
+#advanced-container label,
+#advanced-container .form-label {
+  color: #c3ccdf;
+}
+
+/* ---- Slide-in drawers (playback + required-move + left metric) ---- */
+/* dbc.Offcanvas is light under the Bootstrap base — retint to navy. */
+.offcanvas {
+  background-color: #121a2e;
+  color: #e8edf7;
+  border-color: #1e2a45;
+}
+
+.offcanvas .offcanvas-header {
+  border-bottom: 1px solid #1e2a45;
+}
+
+.offcanvas .offcanvas-title {
+  color: #e8edf7;
+  font-weight: 700;
+}
+
+.offcanvas .btn-close {
+  filter: invert(1) grayscale(1) brightness(1.6);
+}
+
+/* ---- Playback bottom drawer ---- */
+/* Compact fixed height (no 30vh void; lets the arrow attach to the top edge) + a tight header.
+   overflow:visible lets the fixed arrow toggle attach to the drawer's top edge. The dmc.Select
+   menus portal out of the drawer and open upward via comboboxProps (no CSS needed). */
+#playback-drawer.offcanvas-bottom {
+  height: 190px;
+  overflow: visible;
+}
+
+#playback-drawer .offcanvas-header {
+  padding: 0.35rem 0.85rem;
+}
+
+#playback-drawer .offcanvas-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#playback-drawer .offcanvas-body {
+  padding: 0.5rem 0.85rem 0.75rem;
+  overflow: visible;
+}
+
+/* ---- Left metric drawer (the two per-option metric charts) ---- */
+/* Mirrors the playback / required-move drawers: the base .offcanvas rule already retints it navy;
+   here we size it (40% wide, the inline width's CSS twin) and tighten the header. The body is a
+   full-height flex column so the two responsive charts split the height and both fit with margins
+   (no fixed-px overflow / scroll). The arrow toggle is viewport-fixed
+   (options_analysis.metric_drawer_toggle_style) and rides the drawer's right edge.
+   `bottom: 33px` lifts the drawer to sit FLUSH with the top of the collapsed bottom analytics-panel
+   header (~33px tall, the same value the playback arrow uses), so the lower chart's x-axis clears it
+   with no wasted gap and no internal clearance padding. */
+#metric-drawer.offcanvas-start {
+  width: 40%;
+  bottom: 33px;
+}
+
+#metric-drawer .offcanvas-header {
+  padding: 0.35rem 0.85rem;
+}
+
+#metric-drawer .offcanvas-body {
+  /* Tight, uniform gutters — the drawer is lifted above the panel header (no clearance padding needed). */
+  padding: 0.5rem 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---- Right required-move drawer ---- */
+/* A full-height flex body so the inner flex column (build_drawer_body) resolves cleanly and the
+   bottom chart's x-axis isn't scrolled out of view. Width is set inline (40%, zIndex 1500).
+   `bottom: 33px` sits it flush with the collapsed bottom analytics-panel header (same as the metric drawer). */
+#rmd-drawer.offcanvas-end {
+  bottom: 33px;
+}
+
+#rmd-drawer .offcanvas-body {
+  /* Lifted above the panel header → the previous larger bottom-clearance padding is no longer needed. */
+  padding: 0.5rem 0.85rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Reversal-Curves Clear button — on-theme colours only (size/padding/font untouched). Replaces the
+   stock Bootstrap outline grey with the app's tokens: a muted ghost that lifts to ink on hover. */
+#rmd-clear-button {
+  background: transparent;
+  border: 1px solid var(--oc-border);
+  color: var(--oc-muted);
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  line-height: 1.2;
+}
+#rmd-clear-button:hover {
+  color: var(--oc-ink);
+  border-color: var(--oc-border-strong);
+  background: rgba(255, 255, 255, 0.05);
+}
+/* Tidy, balanced header padding (matches the body's horizontal padding so the Clear→edge gap is
+   intentional, not Bootstrap's default 1rem). */
+#rmd-drawer .offcanvas-header {
+  padding: 0.35rem 0.85rem;
+}
+/* Bootstrap's .offcanvas-title is content-width, so the header's justify-content:space-between had
+   no slack and Clear glued itself to the title. Letting the title fill the header width restores
+   space-between → Clear sits at the right (0.85rem header padding gives the edge margin). */
+#rmd-drawer .offcanvas-title {
+  flex: 1;
+}
+
+/* Bottom-panel IV/RV window selector (22D…252D) — an on-theme segmented toggle: transparent ghost
+   buttons on the app's tokens, teal "active" (matching the primary tabs), connected segments.
+   Replaces the stock btn-outline-light. */
+#bottom-panel-window-selector .btn {
+  background: transparent;
+  border: 1px solid var(--oc-border);
+  color: var(--oc-muted);
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  line-height: 1.2;
+}
+#bottom-panel-window-selector .btn:hover {
+  color: var(--oc-ink);
+  border-color: var(--oc-border-strong);
+  background: rgba(255, 255, 255, 0.05);
+}
+#bottom-panel-window-selector .btn-check:checked + .btn,
+#bottom-panel-window-selector .btn.active {
+  background: var(--oc-primary);
+  border-color: var(--oc-primary);
+  color: #07271f;
+}
+/* Connected segments: square inner edges, round only the outer corners, share the middle border. */
+#bottom-panel-window-selector .btn {
+  border-radius: 0;
+}
+#bottom-panel-window-selector .btn:first-of-type {
+  border-radius: 6px 0 0 6px;
+}
+#bottom-panel-window-selector .btn:last-of-type {
+  border-radius: 0 6px 6px 0;
+}
+#bottom-panel-window-selector .btn:not(:first-of-type) {
+  margin-left: -1px;
+}
+#bottom-panel-window-selector .btn-check:checked + .btn {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tier-2 Layer-1 rate marker cells are 5px plain spacer columns coloured by style_data_conditional
+   (up=white / down=sky-blue) — width + padding:0 are pinned in Python (_RATE_MARKER_CELL_STYLE), so no
+   marker CSS is needed here. (The old markdown-gradient approach was dropped: Dash strips inline style
+   from markdown, so the gradient <div> never rendered.) */
